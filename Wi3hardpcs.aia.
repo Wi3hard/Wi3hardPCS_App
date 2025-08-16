@@ -1,0 +1,101 @@
+{
+  "name": "Wi3hardPCS",
+  "description": "Wi3hard PCS Student Companion - Powered by Wi3hard x Gemini AI",
+  "screens": [
+    {
+      "name": "LoginScreen",
+      "components": [
+        {"type":"Label","text":"Welcome to Wi3hard PCS Student Companion"},
+        {"type":"TextBox","hint":"Email","id":"txtEmail"},
+        {"type":"PasswordBox","hint":"Password","id":"txtPassword"},
+        {"type":"Button","text":"Login","id":"btnLogin"},
+        {"type":"Label","id":"lblMessage","text":""}
+      ],
+      "blocks":[
+        {
+          "event":"btnLogin.Click",
+          "actions":[
+            {
+              "action":"CheckLogin",
+              "emailBox":"txtEmail",
+              "passwordBox":"txtPassword",
+              "adminEmail":"stevevictory03@gmail.com",
+              "adminPass":"Olanrewaju@10",
+              "output":"lblMessage",
+              "onSuccess":"DashboardScreen"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name":"DashboardScreen",
+      "components":[
+        {
+          "type":"Spinner",
+          "id":"spinnerCourses",
+          "options":["PCS 101","PCS 102","PCS 103","PCS 104","PCS 105","PCS 106","PCS 107","PCS 108","PCS 110","GST 101","GST 102","GST 103","GST 104","GST 105","GST 106","POL 101","POL 102","POL 108","SOC 101","SOC 102","SOC 110","SOC 111","CSS 101","PSY 101"],
+          "hint":"Select a course"
+        },
+        {"type":"Button","text":"Ask Wi3hard","id":"btnAsk"},
+        {"type":"Button","text":"Generate Questions","id":"btnGenerate"},
+        {"type":"Button","text":"Summary","id":"btnSummary"},
+        {"type":"ImagePicker","id":"imgUpload","visible":false,"premiumOnly":true},
+        {"type":"Label","id":"lblAnswer","text":""},
+        {"type":"Label","id":"lblMessage","text":""}
+      ],
+      "blocks":[
+        {
+          "event":"btnAsk.Click",
+          "actions":[
+            {
+              "action":"CheckDailyLimit",
+              "limit":3,
+              "isPremium":"UserPremium",
+              "successAction":"AskAI",
+              "failureMessage":"You reached daily free limit"
+            }
+          ]
+        },
+        {
+          "event":"btnGenerate.Click",
+          "actions":[
+            {"action":"GenerateCourseQuestions","courseSelector":"spinnerCourses"}
+          ]
+        },
+        {
+          "event":"btnSummary.Click",
+          "actions":[
+            {"action":"GenerateSummary","target":"lblAnswer"}
+          ]
+        }
+      ]
+    }
+  ],
+  "firebase": {
+    "apiKey":"AIzaSyA0GDS0EifwzoTPzZHEzEGCL5cj8i7PSKg",
+    "authDomain":"wi3hardpcs.firebaseapp.com",
+    "projectId":"wi3hardpcs",
+    "storageBucket":"wi3hardpcs.appspot.com",
+    "messagingSenderId":"887627541877",
+    "appId":"1:887627541877:web:d6a2a37abdf9be2625373c",
+    "measurementId":"G-LZYRML00YS"
+  },
+  "geminiAPIKey":"AIzaSyAl8ao_qxMJhdbkcoNJ9U_-2_UJPDl_YyU",
+  "courses": {
+    "rawURL":"https://github.com/Wi3hard/Wi3hardpcs_student_companion/raw/refs/heads/main/courses.json"
+  },
+  "limits":{
+    "freeDailyQuestions":3,
+    "freeDailyGenerated":3
+  },
+  "admin":{
+    "email":"stevevictory03@gmail.com",
+    "password":"Olanrewaju@10"
+  },
+  "premiumPayment":{
+    "accountName":"Steve Victory Olanrewaju",
+    "accountNumber":"7040674283",
+    "provider":"Opay"
+  }
+}
